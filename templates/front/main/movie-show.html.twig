@@ -1,0 +1,113 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    {{movie.title}}
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="container bg-light pt-5">
+
+        <div class="row mb-2">
+
+            <div class="col">
+
+                <div
+                    class="row g-0 border rounded overflow-hidden flex-md-row align-items-start mb-4 shadow-sm position-relative">
+                    <div class="col-4 movie__poster img-thumbnail"
+                        style="background-image: url({{movie.poster}});">
+                        <img src="{{asset('images/poster-placeholder.png')}}" class="img-fluid">
+                        <!-- img src="https://m.media-amazon.com/images/M/MV5BNThmZGY4NzgtMTM4OC00NzNkLWEwNmEtMjdhMGY5YTc1NDE4XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg" class="img-fluid" -->
+                    </div>
+
+                    <div class="col-8 p-4 d-flex flex-column position-static bg-light">
+                        <form action="{{ path('favorites_add') }}" method='post'>
+                            <input type="hidden" name="id_favorite" value="{{movie.id}}"/>
+                            <button class="movie__favorite fs-1 my-2 mx-3 link-danger"><i class="bi bi-bookmark-plus"></i></button>
+                        </form>
+                        <strong class="d-inline-block mb-2 text-primary">
+                        {{movie.type}}
+                        </strong>
+                        <h3 class="mb-1">
+                        {{movie.title}}
+                        </h3>
+                        <div class="mb-1 text-muted">{{movie.duration}} min</div>
+                        <p>
+
+                        {# Ici on peut aller chercher les genres associés au film courant avec la méthode getGenres() de l'entité Movie #}
+                        {% for genre in movie.genres %}
+                            <span class="badge bg-warning text-dark">{{ genre.name }}</span>
+                        {% endfor %}
+
+                        </p>
+                        <p>{{movie.summary}}
+                        </p>
+                        <p>{{movie.synopsis}}
+                        </p>
+
+                        {% include "front/partials/_rating_movie.html.twig" %}
+
+                        {# Partie que pour les séries #}
+                        {% if movie.type == 'série' %}
+                            <h2>{{ movie.seasons|length }} Saisons</h2>
+                            <ul class="list-unstyled">
+                                {% for season in movie.seasons %}
+                                    <li>
+                                        <span class="badge bg-danger fs-6 mb-2">
+                                            Saison {{season.number}}
+                                        </span>
+                                        <small class="ms-1">({{ season.episodesNumber }} épisodes)</small>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+
+                        <dl class="row">
+
+                            {# Les acteurs #}
+                            <dt class="col-sm-12">Avec</dt>
+                            <dd class="col-sm-12">
+                                {% for casting in movie.castings %}
+                                    <span class="badge bg-warning text-dark">
+                                    {{casting.person.firstname}} 
+                                    {{casting.person.lastname}}
+                                    </span>
+                                    dans le rôle de : <strong>{{casting.role}}</strong><br>
+                                {% endfor %}
+                            </dd>
+                            <dt class="col-sm-12">Pays</dt>
+                            <dd class="col-sm-12">USA</dd>
+                            <dt class="col-sm-12">Année</dt>
+                            <dd class="col-sm-12">{{ movie.releaseDate|date("m/d/Y", "Europe/Paris") }}</dd>
+                            <dt class="col-sm-12">Avis</dt>
+                            <dd class="col-sm-12">
+                                {% for review in movie.reviews %}
+                                <div class="my-2">
+                                    <span class="badge bg-secondary text-uppercase mt-2 my-2">
+                                        {{review.username}} le {{review.watchedAt|date("m/d/Y", "Europe/Paris")}}
+                                    </span>
+                                        {% for reaction in review.reactions %}
+                                            <span class="badge bg-secondary text-uppercase mt-2">#{{ reaction }}</span>
+                                        {% endfor %}
+                                    <br>
+                                    {{review.content}}<br>
+                                </div>
+                                {% endfor %}
+                            </dd>
+                            {% if is_granted('ROLE_USER') %}
+                                <a type="button" href="{{ path('add_review', {slug: movie.slug}) }}">
+                                    <span class="badge bg-warning text-dark fs-6 mb-2"> Ajouter une critique </span>
+                                </a>
+                            {% else %}
+                                <a type="button" href="{{ path('app_login') }}">
+                                    <span class="badge bg-primary fs-6 mb-2"> Veuillez vous identifier pour ajouter une critique </span>
+                                </a>
+                            {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+{% endblock %}
+

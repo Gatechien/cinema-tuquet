@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Genre index{% endblock %}
+
+{% block body %}
+{% include "back/partials/_nav_back.html.twig" %}
+<div class="container-xl bg-light p-5 border-top">
+    <h1>Liste des Genres</h1>
+
+    <a type="button" href="{{ path('app_back_genre_new') }}"><span class="badge bg-success fs-6 mx-2 my-2"> Ajouter un genre </span></a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>GenreId</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for genre in genres %}
+            <tr>
+                <td>{{ genre.genreId }}</td>
+                <td>{{ genre.name }}</td>
+                <td>
+                    <a type="button" href="{{ path('app_back_genre_show', {'genreId': genre.genreId}) }}"><span class="badge bg-success fs-6 mx-2 my-2"> Afficher </span></a>
+                    <a type="button" href="{{ path('app_back_genre_edit', {'genreId': genre.genreId}) }}"><span class="badge bg-warning text-dark fs-6 mx-2 my-2"> Editer </span></a>
+                </td>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

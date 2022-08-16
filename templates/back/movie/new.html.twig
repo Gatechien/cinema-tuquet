@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Movie{% endblock %}
+
+{% block body %}
+ <div class="container-xl bg-light p-5 border-top">
+    <h1>Ajouter un(e) Film/Série</h1>
+
+    <a type="button" href="{{ path('app_back_movie_index') }}"><span class="badge bg-warning text-dark fs-6 mx-2 my-2"> Retour à la liste </span></a>
+
+    {{ include('back/movie/_form.html.twig') }}
+</div>
+{% endblock %}

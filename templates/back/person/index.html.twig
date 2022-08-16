@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Person index{% endblock %}
+
+{% block body %}
+{% include "back/partials/_nav_back.html.twig" %}
+<div class="container-xl bg-light p-5 border-top">
+    <h1>Liste des Acteurs/Actrices</h1>
+    
+    <a type="button" href="{{ path('app_back_person_new') }}"><span class="badge bg-success fs-6 mx-2 my-2"> Ajouter un acteur ou une actrice </span></a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for person in people %}
+            <tr>
+                <td>{{ person.id }}</td>
+                <td>{{ person.firstname }}</td>
+                <td>{{ person.lastname }}</td>
+                <td>
+                    <a type="button" href="{{ path('app_back_person_show', {'id': person.id}) }}"><span class="badge bg-success fs-6 mx-2 my-2"> Afficher </span></a>
+                    <a type="button" href="{{ path('app_back_person_edit', {'id': person.id}) }}"><span class="badge bg-warning text-dark fs-6 mx-2 my-2"> Editer </span></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

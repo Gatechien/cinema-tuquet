@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Season{% endblock %}
+
+{% block body %}
+<div class="container-xl bg-light p-5 border-top">
+    <h1>Editer une Saison</h1>
+
+    <a type="button" href="{{ path('app_back_season_index') }}"><span class="badge bg-warning text-dark fs-6 mx-2 my-2"> Retour à la liste </span></a>
+
+    {{ include('back/season/_form.html.twig', {'button_label': 'Editer'}) }}
+
+    {{ include('back/season/_delete_form.html.twig') }}
+</div>
+{% endblock %}

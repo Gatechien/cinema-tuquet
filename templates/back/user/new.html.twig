@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New User{% endblock %}
+
+{% block body %}
+<div class="container-xl bg-light p-5 border-top">
+    <h1>Ajouter un utilisateur</h1>
+
+    <a type="button" href="{{ path('app_back_user_index') }}"><span class="badge bg-warning text-dark fs-6 mx-2 my-2"> Retour à la liste </span></a>
+
+    {{ include('back/user/_form.html.twig') }}
+</div>
+{% endblock %}

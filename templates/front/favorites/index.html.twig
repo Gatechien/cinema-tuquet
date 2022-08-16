@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes favoris{% endblock %}
+
+{% block body %}
+
+<div class="container-xl bg-light p-5 border-top">
+
+        <div class="row mb-2">
+
+            <h2 class="text-muted fw-bold mb-4">Ma liste</h2>
+
+            {# message d'alerte qui ne doit apparaitre QUE lorsqu'il y a un nouveau film ajouté à la liste des favoris #}
+            <!--
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>A bug's life</strong> a été ajouté à votre liste de favoris.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            -->
+            <div class="col-6">
+           
+                {% for movie in favoritesList %}
+                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm bg-white position-relative">
+                        <div class="col-4 movie__poster" style="background-image: url({{movie.poster}});">
+                            <img src="{{ asset('images/poster-placeholder.png') }}" class="img-fluid">
+                            <!-- img src="https://m.media-amazon.com/images/M/MV5BNThmZGY4NzgtMTM4OC00NzNkLWEwNmEtMjdhMGY5YTc1NDE4XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg" class="img-fluid" -->
+                        </div>
+                        <div class="col-8 p-4 d-flex flex-column position-static">
+
+                            <form action="{{ path('favorites_delete', {id:movie.id}) }}" method='post'>
+                                <input type="hidden" name="id_favorite" value="{{movie.id}}"/>
+                                <button class="movie__favorite fs-3 my-2 mx-3 link-danger"><i class="bi bi-backspace-fill"></i></button>
+                            </form>
+                            
+                            <strong class="d-inline-block mb-2 text-primary">
+                            {{movie.type}}
+                            </strong>
+                            <h3 class="mb-1">
+                            {{movie.title}}
+                            </h3>
+                            <div class="mb-1 text-muted">
+                            {{movie.duration}} min
+                            </div>
+                            <a href="{{ path('movieShow', {slug: movie.slug}) }}" class="fs-1 mt-3 text-danger align-self-start">
+                                <i class="bi bi-arrow-right-square-fill"></i>
+                            </a>
+                        </div>
+                    </div>
+                {% else %}
+                    <em>Aucun film dans les favoris</em>
+                {% endfor %}
+            
+            </div>
+        </div>
+        
+        {# lien pour vider la liste des favoris #}
+        <div class="col">
+            <form action="{{ path('favorites_delete-all') }}" method='post'>
+                <input type="hidden" name="id_favorite" value=""/>
+                <button class="btn btn-danger btn-sm" onclick="return confirm('Vider votre liste de favoris ?')">Vider la liste</button>
+            </form>
+        </div>
+
+    </div>
+
+{% endblock %}

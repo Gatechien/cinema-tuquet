@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Person{% endblock %}
+
+{% block body %}
+<div class="container-xl bg-light p-5 border-top">
+    <h1>Acteur/Actrices</h1>
+
+    <a type="button" href="{{ path('app_back_person_index') }}"><span class="badge bg-warning text-dark fs-6 mx-2 my-2"> Retour à la liste </span></a>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ person.id }}</td>
+            </tr>
+            <tr>
+                <th>Firstname</th>
+                <td>{{ person.firstname }}</td>
+            </tr>
+            <tr>
+                <th>Lastname</th>
+                <td>{{ person.lastname }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a type="button" href="{{ path('app_back_person_edit', {'id': person.id}) }}"><span class="badge bg-warning text-dark fs-6 ms-2"> Editer </span></a>
+
+    {{ include('back/person/_delete_form.html.twig') }}
+</div>
+{% endblock %}

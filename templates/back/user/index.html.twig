@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+{% include "back/partials/_nav_back.html.twig" %}
+<div class="container-xl bg-light p-5 border-top">
+    <h1 >Liste des Utilisateurs</h1>
+
+        <a type="button" href="{{ path('app_back_user_new') }}"><span class="badge bg-success fs-6 mx-2 my-2"> Ajouter un utilisateur </span></a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Password</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>{{ user.password }}</td>
+                <td>
+                    <a type="button" href="{{ path('app_back_user_show', {'id': user.id}) }}"><span class="badge bg-success fs-6 mx-2 my-2"> Afficher </span></a>
+                    <a type="button" href="{{ path('app_back_user_edit', {'id': user.id}) }}"><span class="badge bg-warning text-dark fs-6 mx-2 my-2"> Editer </span></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

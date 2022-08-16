@@ -1,0 +1,87 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Ciné Tuquet{% endblock %}
+
+{% block body %}
+
+    {# dans ce block je pourrais mettre une entête ou pas #}
+    {% block header %}{% endblock %}
+
+    <div class="container-xl bg-light p-5 border my-5">
+
+        <div class="row mb-2">
+
+            {% include "front/partials/_nav_genres.html.twig" %}
+
+            <div class="col-12 col-lg-9">
+
+                <h2 class="text-muted fw-bold mb-4">
+                {# dans ce block je pourrais mettre un titre #}
+                {% block subtitle %}{% endblock %}
+                Les nouveautés</h2>
+
+                {% for movie in moviesList %}
+
+
+                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow bg-white position-relative">
+                        <div class="col-4 movie__poster" style="background-image: url({{ asset(movie.poster) }});">
+                            <img src="{{ asset('images/poster-placeholder.png') }}" class="img-fluid">
+                        </div>
+                        <div class="col-8 p-4 d-flex flex-column position-static">
+
+                            <form action="{{ path('favorites_add') }}" method='post'>
+                                <input type="hidden" name="id_favorite" value="{{movie.id}}"/>
+                                <button class="movie__favorite fs-3 my-2 mx-3 link-danger"><i class="bi bi-heart-fill"></i></button>
+                            </form>
+                            
+                            <strong class="d-inline-block mb-2 text-primary">
+                                {{movie.type}}
+                            </strong>
+                            <h3 class="mb-1">
+                                {{movie.title}}
+                            </h3>
+                            <div class="mb-1 text-muted">
+                                {{movie.duration}} min
+                            </div>
+                            <p><small>
+                                {{movie.summary}}
+                            </small>
+                            </p>
+
+                            {% include "front/partials/_rating_movie.html.twig" %}
+
+                            <a href="{{ path('movieShow', {slug: movie.slug}) }}" class="fs-1 mt-3 text-danger align-self-start">
+                                <i class="bi bi-arrow-right-square-fill"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                {% else %}
+
+                    <em>Aucun film à regarder</em>
+
+                {% endfor %}
+
+            </div>
+
+            <nav class="col-lg-9 offset-lg-3">
+                <ul class="pagination">
+                    <li class="page-item disabled">
+                        <a class="page-link">&laquo;</a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item" aria-current="page">
+                        <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">&raquo;</a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+
+    </div>
+
+{% endblock %}

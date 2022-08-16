@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Casting{% endblock %}
+
+{% block body %}
+<div class="container-xl bg-light p-5 border-top">
+    <h1>Edit Casting</h1>
+
+    <a type="button" href="{{ path('app_back_casting_index') }}"><span class="badge bg-warning text-dark fs-6 mx-2 my-2"> Retour à la liste </span></a>
+
+    {{ include('back/casting/_form.html.twig', {'button_label': 'Editer'}) }}
+
+    {{ include('back/casting/_delete_form.html.twig') }}
+</div>
+{% endblock %}

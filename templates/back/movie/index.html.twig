@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Movie index{% endblock %}
+
+{% block body %}
+{% include "back/partials/_nav_back.html.twig" %}
+<div class="container-xl bg-light p-5 border-top">
+    <h1>Liste des Films/Séries</h1>
+
+    <a type="button" href="{{ path('app_back_movie_new') }}"><span class="badge bg-success fs-6 mx-2 my-2"> Ajouter un(e) film/série </span></a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Type</th>
+                <th>ReleaseDate</th>
+                <th>Duration</th>
+                <th>Summary</th>
+                <th>Synopsis</th>
+                <th>Poster</th>
+                <th>Rating</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for movie in movies %}
+            <tr>
+                <td>{{ movie.id }}</td>
+                <td>{{ movie.title }}</td>
+                <td>{{ movie.type }}</td>
+                <td>{{ movie.releaseDate ? movie.releaseDate|date('Y-m-d') : '' }}</td>
+                <td>{{ movie.duration }}</td>
+                <td>{{ movie.summary | striptags|slice(0, 50) }}</td>
+                <td>{{ movie.synopsis | striptags|slice(0, 50) }}</td>
+                <td>{{ movie.poster | striptags|slice(0, 50) }}</td>
+                <td>{{ movie.rating }}</td>
+                <td>
+                    <a type="button" href="{{ path('app_back_movie_show', {'slug': movie.slug}) }}"><span class="badge bg-success fs-6 mx-2 my-2"> Afficher </span></a>
+                    <a type="button" href="{{ path('app_back_movie_edit', {'slug': movie.slug}) }}"><span class="badge bg-warning text-dark fs-6 mx-2 my-2"> Editer </span></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

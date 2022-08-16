@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Season index{% endblock %}
+
+{% block body %}
+{% include "back/partials/_nav_back.html.twig" %}
+<div class="container-xl bg-light p-5 border-top">
+    <h1>Liste des Saisons</h1>
+
+    <a type="button" href="{{ path('app_back_season_new') }}"><span class="badge bg-success fs-6 mx-2 my-2"> Ajouter une saison </span></a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Number</th>
+                <th>EpisodesNumber</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for season in seasons %}
+            <tr>
+                <td>{{ season.id }}</td>
+                <td>{{ season.number }}</td>
+                <td>{{ season.episodesNumber }}</td>
+                <td>
+                    <a type="button" href="{{ path('app_back_season_show', {'id': season.id}) }}"><span class="badge bg-success fs-6 mx-2 my-2"> Afficher </span></a>
+                    <a type="button" href="{{ path('app_back_season_edit', {'id': season.id}) }}"><span class="badge bg-warning text-dark fs-6 mx-2 my-2"> Editer </span></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

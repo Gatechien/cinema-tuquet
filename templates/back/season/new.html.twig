@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Season{% endblock %}
+
+{% block body %}
+<div class="container-xl bg-light p-5 border-top">
+    <h1>Ajouter une saison</h1>
+
+    <a type="button" href="{{ path('app_back_season_index') }}"><span class="badge bg-warning text-dark fs-6 mx-2 my-2"> Retour à la liste </span></a>
+
+    {{ include('back/season/_form.html.twig') }}
+</div>
+{% endblock %}

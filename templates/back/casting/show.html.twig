@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Casting{% endblock %}
+
+{% block body %}
+<div class="container-xl bg-light p-5 border-top">
+    <h1>Casting</h1>
+
+    <a type="button" href="{{ path('app_back_casting_index') }}"><span class="badge bg-warning text-dark fs-6 mx-2 my-2"> Retour à la liste </span></a>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ casting.id }}</td>
+            </tr>
+            <tr>
+                <th>Role</th>
+                <td>{{ casting.role }}</td>
+            </tr>
+            <tr>
+                <th>CreditOrder</th>
+                <td>{{ casting.creditOrder }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a type="button" href="{{ path('app_back_casting_edit', {'id': casting.id}) }}"><span class="badge bg-warning text-dark fs-6 ms-2"> Editer </span></a>
+
+    {{ include('back/casting/_delete_form.html.twig') }}
+</div>
+{% endblock %}
